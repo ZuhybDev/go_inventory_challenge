@@ -1,13 +1,6 @@
 # go_inventory_challenge
 
-A small, self-contained Go challenge implementing a simple inventory service. This repository is intended as a lightweight exercise to demonstrate basic Go project structure, build/run workflow, and simple CRUD operations for inventory items.
-
-## Features
-
-- Basic inventory item model (ID, name, quantity, price)
-- Simple in-memory storage (easy to replace with a DB)
-- HTTP API for CRUD operations (common endpoints listed below)
-- Tests (if present) can be run with `go test` across the module
+A small, self-contained Go challenge implementing a simple inventory service. This repository is intended as a lightweight exercise to demonstrate basic Go project structure, build/run workflow, and simple  operations for inventory items.
 
 ## Prerequisites
 
