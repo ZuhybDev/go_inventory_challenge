@@ -1,6 +1,6 @@
-# go_inventory_challenge
+# go_challenge
 
-A small, self-contained Go challenge implementing a simple inventory service. This repository is intended as a lightweight exercise to demonstrate basic Go project structure, build/run workflow, and simple  operations for inventory items.
+A small, self-contained Go challenge implementing a simple challenges. This repository is intended as a lightweight exercise to demonstrate basic Go project structure, build/run workflow, and simple  operations.
 
 ## Prerequisites
 
@@ -11,8 +11,8 @@ A small, self-contained Go challenge implementing a simple inventory service. Th
 
 1. Clone the repository:
 
-   git clone https://github.com/ZuhybDev/go_inventory_challenge.git
-   cd go_inventory_challenge
+   git clone https://github.com/ZuhybDev/go_challenges.git
+   cd go_challenges
 
 2. Build (to produce a binary):
 
@@ -21,11 +21,11 @@ A small, self-contained Go challenge implementing a simple inventory service. Th
 
 ## Contributing
 
-This repository is a small challenge project — contributions are welcome. If you want to improve the code, add tests, or provide persistence/backing stores, please open a pull request.
+This repository is a small challenge projects — contributions are welcome. If you want to improve the code, add tests, or provide persistence/backing stores, please open a pull request.
 
 To report bugs or request features, open an issue:
 
-  https://github.com/ZuhybDev/go_inventory_challenge/issues
+  https://github.com/ZuhybDev/go_challenges/issues
 
 ## License
 
@@ -33,4 +33,4 @@ Add a license file (e.g. MIT) if you want to make the project open source. If no
 
 ## Author
 
-ZuhybDev — created as a small Go inventory challenge.
+ZuhybDev — created as a small Go challenge.
