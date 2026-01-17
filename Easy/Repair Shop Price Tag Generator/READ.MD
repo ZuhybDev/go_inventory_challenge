@@ -4,7 +4,7 @@ The function calculates final prices by applying markup rates to base costs, sor
 
 Logic:
 
-Calculate final price: baseCost * (1 + markupRate)
+Calculate final price: baseCost \* (1 + markupRate)
 Sort items by final price in ascending order
 Format each tag with item name left-aligned in 20 characters and price right-aligned with 2 decimal places
 Parameters:
