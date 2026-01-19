@@ -1,11 +1,6 @@
-function anacondaReticle(name, length, color, action) {
-  // Write code here
-  console.log("[RETICLE ACTIVE]");
-  console.log("Subject: Anaconda");
-  console.log("Name: ", name);
-  console.log("Length: ", length);
-  console.log("Color: ", color);
-  console.log("Activity: ", action);
+function greetAll(names) {
+  for (let i = 0; i < names; i++) {
+    return `Hello ${names}\n`;
+  }
 }
-
-console.log(anacondaReticle("Python", "1.4", "red", "resting"));
+// Do not write anything outside function
