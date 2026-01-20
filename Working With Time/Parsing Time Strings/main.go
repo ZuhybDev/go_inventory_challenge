@@ -60,7 +60,7 @@ func main() {
 			failedParses++
 		} else {
 			fmt.Printf("Parsed: %s -> %v (using layout: %s)\n", date, parsedTime, layouts[i])
-			fmt.Printf(" Message: %s\n", message)
+			fmt.Printf("  Message: %s\n", message)
 			successfulParses++
 		}
 		layoutUsage[layouts[i]]++
@@ -76,7 +76,7 @@ func main() {
 	// 5. Display layout usage statistics
 	fmt.Println("Layout pattern usage:")
 	for _, layout := range layouts {
-		fmt.Printf("%s: %d times\n", layout, layoutUsage[layout])
+		fmt.Printf("  %s: %d times\n", layout, layoutUsage[layout])
 	}
 	// 6. If timestamps were parsed, display chronological analysis
 	fmt.Println("=== CHRONOLOGICAL ANALYSIS ===")
@@ -95,8 +95,8 @@ func main() {
 			}
 		}
 		timeSpan := latest.Sub(earliest)
-		fmt.Printf("Earliest timestamp: %v\n", earliest.Format("2006-01-02 15:04:05"))
-		fmt.Printf("Latest timestamp: %v\n", latest.Format("2006-01-02 15:04:05"))
+		fmt.Printf("Earliest timestamp: %v\n", earliest)
+		fmt.Printf("Latest timestamp: %v\n", latest)
 		fmt.Printf("Time span covered: %v\n", timeSpan)
 	} else {
 		fmt.Println("No valid timestamps parsed.")
