@@ -1,107 +1,124 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
+	"strconv"
 	"strings"
 	"time"
 )
 
 func main() {
-	// Create scanner for reading input lines
-	scanner := bufio.NewScanner(os.Stdin)
+	// Read input
+	var exerciseInput string = "Warm-up:10:Minute,Stre ngth:30:Minute,Cardio:20:Minute,Cool-down:10:Minute,Stretching:15:Minute"
+	var restInput string = "3:Minute"
+	// fmt.Scanln(&exerciseInput)
+	// fmt.Scanln(&restInput)
 
-	// Read log entries
-	scanner.Scan()
-	logEntries := scanner.Text()
+	// Parse exercises from input
+	exerciseEntries := strings.Split(exerciseInput, ",")
 
-	// Read layout patterns
-	scanner.Scan()
-	layoutPatterns := scanner.Text()
+	// Parse rest period from input
+	restParts := strings.Split(restInput, ":")
 
-	//tests
-	// logEntries := "2023-09-01:Back to school,Sep 15 2023:Mid month,2023/09/30:Month end,Oct 1 2023:New month"
-	// layoutPatterns := "2006-01-02,Jan 2 2006,2006/01/02,Jan 2 2006"
+	var exerciseDuration time.Duration
+	exerciseMap := make(map[string]int)
+	var completeSession time.Duration
+	var totalTime time.Duration
+	var totalRest time.Duration
 
-	// Parse inputs
-	entries := strings.Split(logEntries, ",")
-	layouts := strings.Split(layoutPatterns, ",")
-
-	// // Initialize counters for statistics
-	totalEntries := len(entries)
-	successfulParses := 0
-	failedParses := 0
-	layoutUsage := make(map[string]int)
-	var parsedTimes []time.Time
-
+	fmt.Println("=== WORKOUT SESSION TIMER ===")
+	fmt.Println("Setting up workout session...")
 	// TODO: Write your code below
-	// 1. Display application header
-	fmt.Println("=== LOG TIMESTAMP PARSER ===")
-	// 2. Display processing status
-	fmt.Println("Processing log entries with multiple timestamp formats...")
-	// 3. Process each log entry:
-	//    - Split entry on ":" to get timestamp and message
-	//    - Try each layout pattern until one works
-	//    - Display parsing results
-	//    - Update statistics
+	// 1. Parse each exercise entry to extract name, duration value, and unit
+	// 2. Convert duration values to integers and create time.Duration objects
 
-	for i, log := range entries {
-		trimmed := strings.TrimSpace(log)
+	for _, entry := range exerciseEntries {
+		parts := strings.Split(strings.TrimSpace(entry), ":")
+		name := parts[0]
+		valInt, _ := strconv.Atoi(parts[1])
+		unit := parts[2]
 
-		parts := strings.Split(trimmed, ":")
-		date := parts[0]
-		message := parts[1]
+		switch unit {
+		case "Second":
+			exerciseDuration = time.Duration(valInt) * time.Second
+		case "Minute":
+			exerciseDuration = time.Duration(valInt) * time.Minute
+		case "Hour":
+			exerciseDuration = time.Duration(valInt) * time.Hour
+		}
 
-		parsedTime, err := time.Parse(layouts[i], date)
+		fmt.Printf("Exercise: %s - Duration: %v\n", name, exerciseDuration)
+		exerciseMap[name] = valInt
+		completeSession += exerciseDuration
+		totalTime += exerciseDuration
+	}
+	// 3. Parse rest duration and create time.Duration object
+	restVal, _ := strconv.Atoi(restParts[0])
+	restUnit := restParts[1]
+	var restDuration time.Duration
 
-		if err != nil {
-			fmt.Printf("Failed to parse: %s - no matching layout found\n", date)
-			failedParses++
+	switch restUnit {
+	case "Second":
+		restDuration = time.Duration(restVal) * time.Second
+	case "Minute":
+		restDuration = time.Duration(restVal) * time.Minute
+	case "Hour":
+		restDuration = time.Duration(restVal) * time.Hour
+	}
+
+	numRests := len(exerciseEntries) - 1
+	if numRests > 0 {
+		totalRestTime := restDuration * time.Duration(numRests)
+		completeSession += totalRestTime
+		totalRest += totalRestTime
+	}
+
+	fmt.Printf("Rest period between exercises: %v\n", restDuration)
+
+	// 4. Display workout session information and calculations
+	// 5. Calculate session statistics and time conversions
+
+	fmt.Println("=== SESSION BREAKDOWN ===")
+
+	var (
+		longestName     string
+		shortestName    string
+		averageDuration time.Duration
+	)
+
+	for key, val := range exerciseMap {
+		valInSec := val * 60
+
+		if len(key) == 0 {
+			shortestName = key
+			longestName = key
 		} else {
-			fmt.Printf("Parsed: %s -> %v (using layout: %s)\n", date, parsedTime, layouts[i])
-			fmt.Printf(" Message: %s\n", message)
-			successfulParses++
-		}
-		layoutUsage[layouts[i]]++
-		parsedTimes = append(parsedTimes, parsedTime)
-
-	}
-
-	// 4. Display parsing statistics
-	fmt.Println("=== PARSING RESULTS ===")
-	fmt.Printf("Total log entries processed: %d\n", totalEntries)
-	fmt.Printf("Successfully parsed timestamps: %d\n", successfulParses)
-	fmt.Printf("Failed parsing attempts: %d\n", failedParses)
-	// 5. Display layout usage statistics
-	fmt.Println("Layout pattern usage:")
-	for _, layout := range layouts {
-		fmt.Printf("%s: %d times\n", layout, layoutUsage[layout])
-	}
-	// 6. If timestamps were parsed, display chronological analysis
-	fmt.Println("=== CHRONOLOGICAL ANALYSIS ===")
-
-	if len(parsedTimes) > 0 {
-		earliest := parsedTimes[0]
-		latest := parsedTimes[0]
-
-		for _, t := range parsedTimes {
-			if t.Before(earliest) {
-				earliest = t
+			if len(key) < len(shortestName) {
+				shortestName = key
 			}
-
-			if t.After(latest) {
-				latest = t
+			if len(key) > len(longestName) {
+				longestName = key
 			}
 		}
-		timeSpan := latest.Sub(earliest)
-		fmt.Printf("Earliest timestamp: %v\n", earliest.Format("2006-01-02 15:04:05"))
-		fmt.Printf("Latest timestamp: %v\n", latest.Format("2006-01-02 15:04:05"))
-		fmt.Printf("Time span covered: %v\n", timeSpan)
-	} else {
-		fmt.Println("No valid timestamps parsed.")
+
+		total := time.Duration(val) * time.Minute
+		averageDuration += total
+
+		fmt.Printf("%s: %v seconds\n", key, valInSec)
 	}
-	// 7. Display completion message
-	fmt.Println("Log parsing completed - timestamps converted to time objects")
+
+	fmt.Printf("Rest periods: %v seconds each\n", restDuration.Seconds())
+
+	// Remember to output all the required information as specified in the challenge
+	fmt.Println("=== TIMING CALCULATIONS ===")
+	fmt.Printf("Total exercise time: %v\n", totalTime)
+	fmt.Printf("Total rest time: %v\n", totalRest)
+	fmt.Printf("Complete session duration: %v\n", completeSession)
+
+	fmt.Println("=== SESSION STATISTICS ===")
+	fmt.Printf("Number of exercises: %d\n", len(exerciseMap))
+	fmt.Printf("Longest exercise: %s\n", longestName)
+	fmt.Printf("Shortest exercise: %s\n", shortestName)
+	fmt.Printf("Average exercise duration: %d seconds\n", averageDuration)
 
 }
