@@ -10,11 +10,12 @@ A small, self-contained Go challenge implementing a simple challenges. This repo
 ## Get started
 
 1. Clone the repository:
-
+```bash
    git clone https://github.com/ZuhybDev/go_challenges.git
    cd go_challenges
+```
 
-2. Build (to produce a binary):
+1. Build (to produce a binary):
 
    go build -o bin/inventory ./...
 
