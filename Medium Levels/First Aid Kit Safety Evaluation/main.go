@@ -1,5 +1,3 @@
-package main
-
 import (
 	"fmt"
 	"strconv"
@@ -76,16 +74,4 @@ func evaluateFirstAidKit(supplies []string, householdSize int, currentDate strin
 	}
 
 	return true
-}
-
-func main() {
-	supplies := []string{
-		"bandages:first_aid:2025-01-01:4, antiseptic:wound_care:2025-01-01:4, pain_reliever:medication:2025-01-01:4",
-	}
-
-	householdSize := 2
-	currentDate := "2024-01-01"
-
-	evaluateFirstAidKit(supplies, householdSize, currentDate)
-
 }
